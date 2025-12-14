@@ -11,63 +11,63 @@ from selenium.webdriver.support import expected_conditions as EC
 html_logs = []
 
 def log(message):
-    """Log message to console and HTML report."""
     print(message)
     html_message = message
+
     if "PASSED" in message or "PASS" in message or "[✓]" in message:
         html_message = f'<span style="color: green; font-weight: bold;">{message}</span>'
     elif "FAILED" in message or "FAIL" in message or "Unexpected" in message:
         html_message = f'<span style="color: red; font-weight: bold;">{message}</span>'
-    elif message.startswith("-"*50):
-        html_message = message.replace("-", '<hr style="border: 1px dashed #bbb;">')
+    elif message.startswith("=" * 20):
+        html_message = "<hr style='border:1px dashed #bbb;'>"
+
     html_logs.append(html_message)
 
 def generate_html_report():
-    """Generate HTML report from logged messages."""
     report_path = "Automation_Report.html"
     with open(report_path, "w", encoding="utf-8") as f:
-        f.write("<html><head><title>Automation Report</title>")
-        f.write("<style>")
-        f.write("body { font-family: 'Consolas', monospace; background-color: #f4f4f4; padding: 20px; }")
-        f.write(".container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }")
-        f.write("h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 10px; }")
-        f.write("</style></head><body><div class='container'>")
-        f.write("<h2>Automation Execution Report</h2>")
-        f.write(f"<p><strong>Generated on:</strong> {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</p>")
-        f.write("<pre style='background-color:#fff;padding:15px;border:1px solid #ccc; white-space: pre-wrap;'>")
+        f.write("""
+        <html><head><title>Automation Report</title>
+        <style>
+            body {font-family:Consolas;background:#f4f4f4;padding:20px;}
+            .container {background:#fff;padding:25px;border-radius:8px;}
+        </style></head>
+        <body><div class='container'>
+        <h2>Automation Execution Report</h2>
+        """)
+        f.write(f"<p>Generated on: {datetime.datetime.now()}</p><pre>")
         for line in html_logs:
             f.write(line + "\n")
         f.write("</pre></div></body></html>")
-    log(f"[✓] HTML report saved at: {os.path.abspath(report_path)}")
+    print(f"[✓] HTML Report Generated: {os.path.abspath(report_path)}")
 
-# -------------------- SELENIUM Automation ---------------------
+# -------------------- SELENIUM SETUP ---------------------
 options = Options()
-options.add_argument('--headless')
-options.add_argument('--no-sandbox')
-options.add_argument('--disable-dev-shm-usage')
+options.add_argument("--headless")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+
 driver = webdriver.Chrome(options=options)
+wait = WebDriverWait(driver, 20)
 
 try:
     driver.get("https://www.automationteststore.com/")
-    # FINAL FIX: Increased initial hard wait for slow CI environment to settle
-    time.sleep(3) 
+    time.sleep(3)
 
-    # -------------------- Register ---------------------
-    register_link_xpath = "//a[normalize-space()='Login or register']"
-    
-    # Single wait for clickability, increased timeout to 15s for safety
-    register_link = WebDriverWait(driver, 15).until( 
-        EC.element_to_be_clickable((By.XPATH, register_link_xpath))
-    )
-    register_link.click()
-    
-    log("--------------------PASSED#01-----------------------")
-    log("Clicked on the Register link")
+    # -------------------- REGISTER ---------------------
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, "//a[normalize-space()='Login or register']"))
+    ).click()
 
-    continue_btn = driver.find_element(By.XPATH, "//button[@title='Continue']")
-    continue_btn.click()
-    log("--------------------PASSED#02-----------------------")
-    log("Clicked Continue button on registration")
+    log("==================== PASSED #01 ====================")
+    log("Clicked Login or Register")
+
+    wait.until(EC.element_to_be_clickable(
+        (By.XPATH, "//button[@title='Continue']"))
+    ).click()
+
+    log("==================== PASSED #02 ====================")
+    log("Clicked Continue")
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     email = f"test{timestamp}@gmail.com"
@@ -78,85 +78,124 @@ try:
     driver.find_element(By.ID, "AccountFrm_address_1").send_keys("123 Test Street")
     driver.find_element(By.ID, "AccountFrm_city").send_keys("Karachi")
 
-    # Country & Zone selection
+    # Country Selection
     country = driver.find_element(By.ID, "AccountFrm_country_id")
-    for option in country.find_elements(By.TAG_NAME, "option"):
-        if option.text.strip() == "Pakistan":
-            option.click()
-            break
-    time.sleep(1)
-    zone = driver.find_element(By.ID, "AccountFrm_zone_id")
-    for option in zone.find_elements(By.TAG_NAME, "option"):
-        if option.text.strip() == "Sindh":
-            option.click()
+    for opt in country.find_elements(By.TAG_NAME, "option"):
+        if opt.text.strip() == "Pakistan":
+            opt.click()
             break
 
-    driver.find_element(By.ID, "AccountFrm_postcode").send_keys("7400")
+    time.sleep(1)
+
+    # Zone Selection
+    zone = driver.find_element(By.ID, "AccountFrm_zone_id")
+    for opt in zone.find_elements(By.TAG_NAME, "option"):
+        if opt.text.strip() == "Sindh":
+            opt.click()
+            break
+
+    driver.find_element(By.ID, "AccountFrm_postcode").send_keys("74000")
     driver.find_element(By.ID, "AccountFrm_loginname").send_keys(f"user{timestamp}")
     driver.find_element(By.ID, "AccountFrm_password").send_keys("test1234")
     driver.find_element(By.ID, "AccountFrm_confirm").send_keys("test1234")
     driver.find_element(By.ID, "AccountFrm_newsletter0").click()
     driver.find_element(By.ID, "AccountFrm_agree").click()
 
-    # FIX: Add a small wait after submitting the form to ensure the next page loads
     driver.find_element(By.XPATH, "//button[@title='Continue']").click()
-    # Waiting for the URL to change to the success page is the best way to ensure navigation completes.
-    WebDriverWait(driver, 10).until(EC.url_changes("https://www.automationteststore.com/index.php?rt=account/success"))
 
-    log("--------------------PASSED#03-----------------------")
-    log("User Registered successfully")
+    # -------- IF ELSE VALIDATION (NOT CUT) --------
+    time.sleep(3)
+    success_text = driver.find_element(By.CLASS_NAME, "maintext").text.lower()
 
-    # Validate registration success
-    success_message = driver.find_element(By.CLASS_NAME, "maintext").text.strip()
-    if "your account has been created!" in success_message.lower():
-        log("--------------------PASSED#04-----------------------")
-        log("Registration success message verified")
+    if "your account has been created" in success_text:
+        log("==================== PASSED #03 ====================")
+        log("Registration Successful")
     else:
-        log("-------------FAILED----------------------")
-        log(f"Registration message mismatch: {success_message}")
+        log("==================== FAILED ====================")
+        log("Registration Failed")
 
-    # -------------------- Shopping ---------------------
+    # -------------------- SHOPPING ---------------------
     driver.find_element(By.LINK_TEXT, "Continue").click()
-    apparel_link = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.XPATH, "//a[contains(@href,'path=68')]")))
 
-    if apparel_link.is_displayed() and apparel_link.is_enabled():
-        apparel_link.click()
-        log("--------------------PASSED#05-----------------------")
-        log("Clicked on Apparel & accessories")
+    apparel = wait.until(EC.presence_of_element_located(
+        (By.XPATH, "//a[contains(@href,'path=68')]")))
 
-    shoes_link = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.LINK_TEXT, "Shoes")))
-    shoes_link.click()
-    log("--------------------PASSED#06-----------------------")
-    log("Selected Shoes")
+    if apparel.is_displayed() and apparel.is_enabled():
+        apparel.click()
+        log("==================== PASSED #04 ====================")
+        log("Clicked Apparel & Accessories")
+    else:
+        log("==================== FAILED ====================")
+        log("Apparel link not clickable")
 
-    driver.find_element(By.CLASS_NAME, "prdocutname").click()
-    log("--------------------PASSED#07-----------------------")
-    log("Opened product details")
+    shoes = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "Shoes")))
+    if shoes.is_displayed():
+        shoes.click()
+        log("==================== PASSED #05 ====================")
+        log("Shoes selected")
+    else:
+        log("==================== FAILED ====================")
+        log("Shoes not visible")
 
-    quantity = driver.find_element(By.ID, "product_quantity")
-    quantity.clear()
-    quantity.send_keys("10")
-    log("--------------------PASSED#08-----------------------")
-    log("Set product quantity to 10")
+    product = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "prdocutname")))
+    if product.is_displayed():
+        product.click()
+        log("==================== PASSED #06 ====================")
+        log("Product opened")
+    else:
+        log("==================== FAILED ====================")
+        log("Product not opened")
 
-    add_to_cart = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".cart")))
-    add_to_cart.click()
-    log("--------------------PASSED#09-----------------------")
-    log("Product added to cart")
+    qty = driver.find_element(By.ID, "product_quantity")
+    if qty.is_enabled():
+        qty.clear()
+        qty.send_keys("10")
+        log("==================== PASSED #07 ====================")
+        log("Quantity set to 10")
+    else:
+        log("==================== FAILED ====================")
+        log("Quantity field disabled")
+
+    add_cart = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".cart")))
+    if add_cart.is_enabled():
+        add_cart.click()
+        log("==================== PASSED #08 ====================")
+        log("Added to cart")
+    else:
+        log("==================== FAILED ====================")
+        log("Add to cart failed")
 
     checkout = driver.find_element(By.ID, "cart_checkout1")
-    checkout.click()
-    log("--------------------PASSED#10-----------------------")
-    log("Clicked on Checkout")
+    if checkout.is_displayed():
+        checkout.click()
+        log("==================== PASSED #09 ====================")
+        log("Checkout clicked")
+    else:
+        log("==================== FAILED ====================")
+        log("Checkout button missing")
 
-    order_btn = WebDriverWait(driver, 15).until(EC.presence_of_element_located((By.ID, "checkout_btn")))
-    order_btn.click()
-    log("--------------------PASSED#11-----------------------")
-    log("Order placed successfully")
+    order_btn = wait.until(EC.presence_of_element_located((By.ID, "checkout_btn")))
+    if order_btn.is_enabled():
+        order_btn.click()
+        log("==================== PASSED #10 ====================")
+        log("Order placed")
+    else:
+        log("==================== FAILED ====================")
+        log("Order button disabled")
 
-    # Verify order success
-    success_msg = WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".maintext")))
-    log(f"[✓] Order Status: {success_msg.text}")
+    time.sleep(3)
+    order_msg = driver.find_element(By.CLASS_NAME, "maintext").text.lower()
+
+    if "your order has been processed" in order_msg:
+        log("==================== PASSED #11 ====================")
+        log("Order success message verified")
+    else:
+        log("==================== FAILED ====================")
+        log("Order confirmation missing")
+
+except Exception as e:
+    log("==================== FAILED ====================")
+    log(str(e))
 
 finally:
     driver.quit()
