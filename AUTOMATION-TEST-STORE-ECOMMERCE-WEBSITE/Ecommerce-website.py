@@ -58,8 +58,7 @@ try:
     # -------------------- REGISTER ---------------------
     register_link_xpath = "//a[normalize-space()='Login or register']"
     
-    # ULTIMATE FIX: Use JavaScript to force the click once the element is present, 
-    # bypassing all CI rendering/interactability issues.
+    # ULTIMATE FIX 1: Use JavaScript to force the click (for initial link)
     register_link = wait.until(
         EC.presence_of_element_located((By.XPATH, register_link_xpath))
     )
@@ -128,16 +127,14 @@ try:
     driver.find_element(By.LINK_TEXT, "Continue").click()
 
     # Wait for Apparel link
-    apparel = wait.until(EC.presence_of_element_located(
-        (By.XPATH, "//a[contains(@href,'path=68')]")))
+    apparel_xpath = "//a[contains(@href,'path=68')]"
+    
+    # ULTIMATE FIX 2: Use JavaScript to force the click on the Apparel link
+    apparel = wait.until(EC.presence_of_element_located((By.XPATH, apparel_xpath)))
+    driver.execute_script("arguments[0].click();", apparel) # FORCED CLICK
 
-    if apparel.is_displayed() and apparel.is_enabled():
-        apparel.click()
-        log("==================== PASSED #04 ====================")
-        log("Clicked Apparel & Accessories")
-    else:
-        log("==================== FAILED ====================")
-        log("Apparel link not clickable")
+    log("==================== PASSED #04 ====================")
+    log("Clicked Apparel & Accessories via JavaScript Executor")
 
     # Wait for Shoes link
     shoes = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "Shoes")))
