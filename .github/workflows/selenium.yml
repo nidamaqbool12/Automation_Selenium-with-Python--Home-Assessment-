@@ -11,15 +11,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-<<<<<<< HEAD
-    - name: Checkout repository
-      uses: actions/checkout@v4
-0
-    - name: Set up Python 3.x
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.x'
-=======
       # 1. Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -29,13 +20,13 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.x"
->>>>>>> 8cdaa94983e38e7e0f30e693ba18a042ff9c7a6b
 
       # 3. Install dependencies (from requirements.txt)
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          # Correcting the path to requirements.txt for the sub-directory
+          pip install -r AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/requirements.txt
 
       # 4. Setup Chrome and ChromeDriver
       - name: Setup Chrome and ChromeDriver
@@ -44,7 +35,6 @@ jobs:
           install-chromedriver: true
           install-dependencies: true
 
-      # 5. Run Selenium script with headless Chrome
       # 5. Run Selenium script with headless Chrome
       - name: Run Selenium Script
         run: python AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/Ecommerce-website.py
