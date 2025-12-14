@@ -1,4 +1,0 @@
-email,password,main_track,sub_track,title,abstract,keywords,manuscript_ref_code
-ali.khan@example.com,Pass123,Surgery,Surgical Oncology,"Advances in Surgical Oncology","Study on new surgical techniques for oncology patients.","surgery, oncology, treatment","REF1001"
-user2@example.com,Pass456,Surgery,Surgical Oncology,"Laparoscopic Cancer Surgeries","Evaluating laparoscopic procedures in cancer treatment.","laparoscopy, cancer, surgery","REF1002"
-user3@example.com,Pass789,Surgery,Surgical Oncology,"Postoperative Care in Oncology","Improving recovery after oncologic surgeries.","postoperative, oncology, care",""
