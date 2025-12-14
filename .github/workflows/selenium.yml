@@ -35,8 +35,9 @@ jobs:
           install-dependencies: true
 
       # 5. Run Selenium script with headless Chrome
+      # 5. Run Selenium script with headless Chrome
       - name: Run Selenium Script
-        run: python Ecommerce-website.py
+        run: python AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/Ecommerce-website.py
 
       # 6. Upload Automation Report
       - name: Upload Automation Report
