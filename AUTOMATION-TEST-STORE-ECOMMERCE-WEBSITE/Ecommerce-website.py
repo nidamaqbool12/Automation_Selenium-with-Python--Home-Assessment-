@@ -49,13 +49,14 @@ driver = webdriver.Chrome(options=options)
 
 try:
     driver.get("https://www.automationteststore.com/")
-    time.sleep(1)
+    # FINAL FIX: Increased initial hard wait for slow CI environment to settle
+    time.sleep(3) 
 
     # -------------------- Register ---------------------
-    # FIX: Use WebDriverWait for element_to_be_clickable to resolve ElementNotInteractableException
     register_link_xpath = "//a[normalize-space()='Login or register']"
     
-    register_link = WebDriverWait(driver, 10).until(
+    # Single wait for clickability, increased timeout to 15s for safety
+    register_link = WebDriverWait(driver, 15).until( 
         EC.element_to_be_clickable((By.XPATH, register_link_xpath))
     )
     register_link.click()
@@ -99,7 +100,8 @@ try:
 
     # FIX: Add a small wait after submitting the form to ensure the next page loads
     driver.find_element(By.XPATH, "//button[@title='Continue']").click()
-    WebDriverWait(driver, 10).until(EC.url_changes("https://www.automationteststore.com/index.php?rt=account/success")) 
+    # Waiting for the URL to change to the success page is the best way to ensure navigation completes.
+    WebDriverWait(driver, 10).until(EC.url_changes("https://www.automationteststore.com/index.php?rt=account/success")) 
 
     log("--------------------PASSED#03-----------------------")
     log("User Registered successfully")
