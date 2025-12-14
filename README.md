@@ -72,11 +72,12 @@ To clone the project repository to your local machine:
 ## 1. Cloning the Project Repository
 
 To clone the project repository to your local machine:
+
 git clone [YOUR_GITHUB_REPO_LINK]
 cd Automation_Selenium-with-Python--Home-Assessment-
 
 
-#2. Connecting Local Repository to GitHub 
+## 2. Connecting Local Repository to GitHub 
 
 git remote add origin [YOUR_GITHUB_REPO_LINK]
 git branch -M main
