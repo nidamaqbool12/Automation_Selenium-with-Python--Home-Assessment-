@@ -101,7 +101,7 @@ try:
     # FIX: Add a small wait after submitting the form to ensure the next page loads
     driver.find_element(By.XPATH, "//button[@title='Continue']").click()
     # Waiting for the URL to change to the success page is the best way to ensure navigation completes.
-    WebDriverWait(driver, 10).until(EC.url_changes("https://www.automationteststore.com/index.php?rt=account/success")) 
+    WebDriverWait(driver, 10).until(EC.url_changes("https://www.automationteststore.com/index.php?rt=account/success"))
 
     log("--------------------PASSED#03-----------------------")
     log("User Registered successfully")
