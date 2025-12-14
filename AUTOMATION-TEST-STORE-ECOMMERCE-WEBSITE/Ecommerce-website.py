@@ -52,7 +52,7 @@ try:
     time.sleep(1)
 
     # -------------------- Register ---------------------
-    register_link = driver.find_element(By.LINK_TEXT, "Login or register")
+    register_link = driver.find_element(By.XPATH, "//a[normalize-space()='Login or register']")
     register_link.click()
     log("--------------------PASSED#01-----------------------")
     log("Clicked on the Register link")
