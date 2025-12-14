@@ -31,7 +31,7 @@ jobs:
 
     - name: Run Python Automation Scripts
       run: |
-        # Run Selenium in headless mode to avoid GUI issues on GitHub Actions
+        # Run Selenium script with headless Chrome
         python main.py
 
     - name: Upload Automation Report
