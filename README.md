@@ -67,82 +67,62 @@ The automation project can be executed locally using PyCharm or any other Python
 
 To clone the project repository to your local machine:
 
-```bash
+# Automation Selenium with Python - Home Assessment
+
+## 1. Cloning the Project Repository
+
+To clone the project repository to your local machine:
+
 git clone [YOUR_GITHUB_REPO_LINK]
 cd Automation_Selenium-with-Python--Home-Assessment-
-3. Connecting Local Repository to GitHub (Optional)
-If you intend to push changes back to the GitHub repository:
 
-bash
-Copy code
+#2. Connecting Local Repository to GitHub 
 git remote add origin [YOUR_GITHUB_REPO_LINK]
 git branch -M main
 git push -u origin main
-4. Creating and Activating a Virtual Environment
-bash
-Copy code
-# Linux/macOS
-python -m venv venv
-source venv/bin/activate
 
-# Windows
-python -m venv venv
-.\venv\Scripts\activate
-5. Installing Required Python Dependencies
-bash
-Copy code
+##3 Installing Required Python Dependencies
+
 pip install selenium
-Instructions for Running the Automation Test Script
-The automation script can be executed directly from the terminal or using PyCharm.
 
-From the Terminal
-bash
-Copy code
-python AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/Ecommerce-website.py
-Note: The script is configured to run Chrome in headless mode by default, providing faster execution and compatibility with CI/CD pipelines.
+##4 Instructions for Running the Automation Test Script 
 
-From PyCharm
+git add AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/Ecommerce-website.py
+git commit -m "checkout confirmation."
+git push origin main
+  Note: The script is configured to run Chrome in headless mode by default, providing faster execution and compatibility with CI/CD pipelines.
+
+##From PyCharm
+
 Open the project in PyCharm.
-
 Locate Ecommerce-website.py in the project explorer.
-
 Right-click on the script and select Run 'Ecommerce-website'.
 
-Continuous Integration and Deployment (CI/CD) Using GitHub Actions
-This project is integrated with GitHub Actions to provide automated testing and immediate feedback upon code changes.
+#Continuous Integration and Deployment (CI/CD) Using GitHub Actions
 
-Workflow Overview
+##Workflow Overview
+
 Trigger: The workflow runs automatically on every push to the main branch.
-
 Environment Setup: The CI job runs on an Ubuntu Linux runner, installs Python, and the required dependencies (selenium).
-
 Test Execution: The Selenium automation script runs in headless Chrome.
-
 Reporting: After execution, the Automation_Report.html file is generated and uploaded as a workflow artifact for review.
 
-Viewing the Automation Test Report
+
+##Viewing the Automation Test Report
+
 Navigate to the Actions tab in your GitHub repository.
-
 Select the most recent workflow run.
+Scroll to the Artifacts section and download `Automation_Test_Report.html
 
-Scroll to the Artifacts section and download Automation_Test_Report.html to view the detailed test execution log.
+##Project Directory Structure
+<img width="874" height="245" alt="image" src="https://github.com/user-attachments/assets/5dfd57ff-2383-478b-8f59-2cd723fc8467" />
 
-Project Directory Structure
-graphql
-Copy code
-Automation_Selenium-with-Python--Home-Assessment-/
-├── .github/
-│   └── workflows/
-│       └── main.yml           # GitHub Actions CI/CD pipeline configuration
-├── AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/
-│   └── Ecommerce-website.py   # Main Python automation script
-├── Automation_Report.html     # Auto-generated HTML test report
-└── README.md                  # Project documentation
-Important Notes and Considerations
+
+##Important Notes and Considerations
+
 The website used for testing is a dummy e-commerce site, and all orders are non-functional.
-
 The automation script dynamically generates test data to prevent duplicate registrations.
-
 The use of explicit waits and JavaScript Executor ensures stable and reliable execution across both local and CI/CD environments.
-
 Running the script in PyCharm is recommended for debugging, viewing logs, and inspecting web elements during development.
+
+
