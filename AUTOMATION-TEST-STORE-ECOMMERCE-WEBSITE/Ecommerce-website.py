@@ -6,6 +6,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException, NoSuchElementException, ElementNotInteractableException
 
 # -------------------- HTML LOGGING & REPORT ---------------------
 html_logs = []
@@ -52,26 +53,29 @@ wait = WebDriverWait(driver, 20)
 
 try:
     driver.get("https://www.automationteststore.com/")
-    time.sleep(3)
+    time.sleep(3) # Initial hard wait for CI stability
 
     # -------------------- REGISTER ---------------------
-    wait.until(EC.element_to_be_clickable(
-        (By.XPATH, "//a[normalize-space()='Login or register']"))
-    ).click()
+    # FIX: Use presence first, then clickability, with a higher timeout
+    register_link_xpath = "//a[normalize-space()='Login or register']"
+    wait.until(EC.presence_of_element_located((By.XPATH, register_link_xpath)))
+    wait.until(EC.element_to_be_clickable((By.XPATH, register_link_xpath))).click()
 
     log("==================== PASSED #01 ====================")
     log("Clicked Login or Register")
 
+    # Click Continue on Registration page
     wait.until(EC.element_to_be_clickable(
         (By.XPATH, "//button[@title='Continue']"))
     ).click()
 
     log("==================== PASSED #02 ====================")
-    log("Clicked Continue")
+    log("Clicked Continue on Registration")
 
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S")
     email = f"test{timestamp}@gmail.com"
 
+    # Fill form data
     driver.find_element(By.ID, "AccountFrm_firstname").send_keys("Test")
     driver.find_element(By.ID, "AccountFrm_lastname").send_keys("User")
     driver.find_element(By.ID, "AccountFrm_email").send_keys(email)
@@ -85,7 +89,7 @@ try:
             opt.click()
             break
 
-    time.sleep(1)
+    time.sleep(1) # Small wait for Zone dropdown to populate
 
     # Zone Selection
     zone = driver.find_element(By.ID, "AccountFrm_zone_id")
@@ -101,22 +105,25 @@ try:
     driver.find_element(By.ID, "AccountFrm_newsletter0").click()
     driver.find_element(By.ID, "AccountFrm_agree").click()
 
+    # Submit final form
     driver.find_element(By.XPATH, "//button[@title='Continue']").click()
 
-    # -------- IF ELSE VALIDATION (NOT CUT) --------
-    time.sleep(3)
-    success_text = driver.find_element(By.CLASS_NAME, "maintext").text.lower()
+    # FIX: Wait explicitly for the success message element after submission
+    success_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "maintext")))
+    success_text = success_element.text.lower()
 
     if "your account has been created" in success_text:
         log("==================== PASSED #03 ====================")
         log("Registration Successful")
     else:
         log("==================== FAILED ====================")
-        log("Registration Failed")
+        log(f"Registration Failed. Expected success message, but found: {success_text}")
+
 
     # -------------------- SHOPPING ---------------------
     driver.find_element(By.LINK_TEXT, "Continue").click()
 
+    # Wait for Apparel link
     apparel = wait.until(EC.presence_of_element_located(
         (By.XPATH, "//a[contains(@href,'path=68')]")))
 
@@ -128,6 +135,7 @@ try:
         log("==================== FAILED ====================")
         log("Apparel link not clickable")
 
+    # Wait for Shoes link
     shoes = wait.until(EC.presence_of_element_located((By.LINK_TEXT, "Shoes")))
     if shoes.is_displayed():
         shoes.click()
@@ -137,6 +145,7 @@ try:
         log("==================== FAILED ====================")
         log("Shoes not visible")
 
+    # Wait for product to click
     product = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "prdocutname")))
     if product.is_displayed():
         product.click()
@@ -146,6 +155,7 @@ try:
         log("==================== FAILED ====================")
         log("Product not opened")
 
+    # Set quantity
     qty = driver.find_element(By.ID, "product_quantity")
     if qty.is_enabled():
         qty.clear()
@@ -156,6 +166,7 @@ try:
         log("==================== FAILED ====================")
         log("Quantity field disabled")
 
+    # Add to cart
     add_cart = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, ".cart")))
     if add_cart.is_enabled():
         add_cart.click()
@@ -165,6 +176,7 @@ try:
         log("==================== FAILED ====================")
         log("Add to cart failed")
 
+    # Checkout
     checkout = driver.find_element(By.ID, "cart_checkout1")
     if checkout.is_displayed():
         checkout.click()
@@ -174,6 +186,7 @@ try:
         log("==================== FAILED ====================")
         log("Checkout button missing")
 
+    # Place Order
     order_btn = wait.until(EC.presence_of_element_located((By.ID, "checkout_btn")))
     if order_btn.is_enabled():
         order_btn.click()
@@ -183,19 +196,21 @@ try:
         log("==================== FAILED ====================")
         log("Order button disabled")
 
-    time.sleep(3)
-    order_msg = driver.find_element(By.CLASS_NAME, "maintext").text.lower()
+    # Verify Order Success
+    # FIX: Wait for the final order success message
+    order_success_element = wait.until(EC.presence_of_element_located((By.CLASS_NAME, "maintext")))
+    order_msg = order_success_element.text.lower()
 
     if "your order has been processed" in order_msg:
         log("==================== PASSED #11 ====================")
         log("Order success message verified")
     else:
         log("==================== FAILED ====================")
-        log("Order confirmation missing")
+        log(f"Order confirmation missing. Actual message: {order_msg}")
 
 except Exception as e:
     log("==================== FAILED ====================")
-    log(str(e))
+    log(f"An unexpected error occurred: {type(e).__name__}: {str(e)}")
 
 finally:
     driver.quit()
