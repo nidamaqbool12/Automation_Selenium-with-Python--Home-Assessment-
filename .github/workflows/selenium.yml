@@ -2,7 +2,7 @@ name: Python Selenium Tests
 
 on:
   push:
-    branches: ["main"]
+    branches: ["main", "develop"]
   pull_request:
     branches: ["main"]
 
@@ -11,6 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+<<<<<<< HEAD
     - name: Checkout repository
       uses: actions/checkout@v4
 0
@@ -18,28 +19,41 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
+=======
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install selenium
+      # 2. Setup Python
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+>>>>>>> 8cdaa94983e38e7e0f30e693ba18a042ff9c7a6b
 
-    - name: Install Google Chrome & ChromeDriver
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y google-chrome-stable unzip
-        wget https://chromedriver.storage.googleapis.com/115.0.5790.102/chromedriver_linux64.zip
-        unzip chromedriver_linux64.zip
-        sudo mv chromedriver /usr/local/bin/
-        sudo chmod +x /usr/local/bin/chromedriver
+      # 3. Install dependencies (from requirements.txt)
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-    - name: Run Ecommerce Selenium Script
-      run: python Ecommerce-website.py
+      # 4. Setup Chrome and ChromeDriver
+      - name: Setup Chrome and ChromeDriver
+        uses: browser-actions/setup-chrome@v2
+        with:
+          install-chromedriver: true
+          install-dependencies: true
 
-    - name: Upload Automation Report
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: automation-report
-        path: Automation_Report.html
-        retention-days: 5
+      # 5. Run Selenium script with headless Chrome
+      # 5. Run Selenium script with headless Chrome
+      - name: Run Selenium Script
+        run: python AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/Ecommerce-website.py
+
+      # 6. Upload Automation Report
+      - name: Upload Automation Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: automation-report
+          path: Automation_Report.html
+          retention-days: 5
