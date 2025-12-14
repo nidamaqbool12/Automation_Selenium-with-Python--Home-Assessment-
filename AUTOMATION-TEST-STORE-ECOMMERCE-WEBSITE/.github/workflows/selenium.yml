@@ -7,33 +7,43 @@ on:
     branches: ["main"]
 
 jobs:
-  build:
+  run-selenium-tests:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. Checkout repository
     - name: Checkout repository
       uses: actions/checkout@v4
 
+    # 2. Setup Python
     - name: Set up Python 3.x
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
 
+    # 3. Install dependencies
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+        pip install selenium
 
-    - name: Install Google Chrome
+    # 4. Install Chrome and ChromeDriver
+    - name: Install Google Chrome & ChromeDriver
       run: |
         sudo apt-get update
-        sudo apt-get install google-chrome-stable -y
+        sudo apt-get install -y google-chrome-stable
+        wget https://chromedriver.storage.googleapis.com/115.0.5790.102/chromedriver_linux64.zip
+        unzip chromedriver_linux64.zip
+        sudo mv chromedriver /usr/local/bin/
+        sudo chmod +x /usr/local/bin/chromedriver
 
-    - name: Run Python Automation Scripts
+    # 5. Run Selenium script with headless Chrome
+    - name: Run Ecommerce Selenium Script
       run: |
-        # Run Selenium script with headless Chrome
         python Ecommerce-website.py
 
+    # 6. Upload Automation_Report.html as artifact
     - name: Upload Automation Report
       if: always()
       uses: actions/upload-artifact@v4
