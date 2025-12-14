@@ -1,0 +1,52 @@
+<html><head><title>Automation Report</title><style>body { font-family: 'Consolas', 'Courier New', monospace; background-color: #f4f4f4; padding: 20px; }.container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 10px; }</style></head><body><div class='container'><h2>Automation Execution Report</h2><p><strong>Generated on:</strong> 2025-12-12 15:17:24</p><pre style='background-color:#fff;padding:15px;border:1px solid #ccc; white-space: pre-wrap; word-wrap: break-word;'>                      Positive Test Cases for Author Login                                               
+
+---------------------------------------POSITIVE TC_01----------------------------------------------------
+Login with valid email and password after login it should redirect to the Dashboard Page.
+<span style="color: red; font-weight: bold;">Failed TestCase:Positive TC_01 - Login with valid credentials: but it doesn't redirect to the Dashboard Page: Login failed</span>
+Your session has expired. please sign-in again
+ 
+---------------------------------------POSITIVE TC_02----------------------------------------------------
+Refreshing the page before login
+<span style="color: red; font-weight: bold;">Failed TestCase:Positive TC_02 - Login with valid credentials: but it doesn't redirect to the Dashboard Page: Login failed</span>
+Your session has expired. please sign-in again
+                                Negative Test Cases for Author Login                                               
+
+---------------------------------------NEGATIVE TC_01----------------------------------------------------
+Leave both email and password fields empty and click the login button.
+<span style="color: green; font-weight: bold;">Passed TestCase: NEGATIVE TC_01 - Empty fields,Login Blocked!</span>
+---------------------------------------NEGATIVE TC_02----------------------------------------------------
+Enter an email with numbers (e.g.Jennifer@23testingxolva.com) and a valid password, then click the Sign In button.
+<span style="color: red; font-weight: bold;">Failed TestCase:NEGATIVE TC_02 - Email with numbers format: Unexpected behavior </span>
+---------------------------------------NEGATIVE TC_03----------------------------------------------------
+Login using the Enter key
+<span style="color: red; font-weight: bold;">Failed TestCase:Negative TC_03 - Login with valid credentials: but it doesn't redirect to the Dashboard Page: Login failed</span>
+Your session has expired. please sign-in again
+---------------------------------------NEGATIVE TC_04----------------------------------------------------
+Enter an email with invalid format (e.g., Jennifer@@testingxolva.com) and a valid password, then click Sign In..
+<span style="color: green; font-weight: bold;">Passed TestCase:Negative TC_04 - Invalid email format: Login blocked</span>
+---------------------------------------NEGATIVE TC_05----------------------------------------------------
+Enter the valid email and invalid password click the Sign In button.
+<span style="color: red; font-weight: bold;">Failed TestCase:Negative TC_05 -Invalid password: Unexpected behavior</span>
+---------------------------------------NEGATIVE TC_06----------------------------------------------------
+Enter the invalid email and invalid password click the Sign In button.
+<span style="color: green; font-weight: bold;">Passed TestCase:Negative TC_06 - Invalid email and password: Login blocked</span>
+---------------------------------------NEGATIVE TC_07----------------------------------------------------
+Enter a common SQL injection string in the email field (e.g., ' OR '1'='1) and a valid password, then click Sign In..
+<span style="color: green; font-weight: bold;">Passed TestCase:Negative TC_07 - SQL injection string in the email field: Login blocked</span>
+---------------------------------------NEGATIVE TC_08----------------------------------------------------
+Enter a valid email and password with leading or trailing whitespaces and click Sign In.
+<span style="color: red; font-weight: bold;">Failed TestCase:Negative TC_08 -Invalid email and password: Unexpected behavior</span>
+---------------------------------------NEGATIVE TC_09----------------------------------------------------
+Enter an unregistered email address with a valid password and click Sign In.
+<span style="color: red; font-weight: bold;">Failed TestCase:Negative TC_09 -Invalid email and password: Unexpected behavior</span>
+---------------------------------------NEGATIVE TC_10----------------------------------------------------
+Enter a valid email with a password shorter than the required minimum and click Sign In.
+<span style="color: red; font-weight: bold;">Failed TestCase:Negative TC_10 -Invalid email and password: Unexpected behavior</span>
+---------------------------------------NEGATIVE TC_11----------------------------------------------------
+Enter HTML or JavaScript code (e.g., <script>alert(1)</script>) in password field and click Sign In..
+<span style="color: red; font-weight: bold;">Failed TestCase:Negative TC_11 -HTML/JS code (XSS) attempt: Blocked successfully: Unexpected behavior</span>
+---------------------------------------NEGATIVE TC_12----------------------------------------------------
+Enter the email in uppercase (e.g., JENNIFER@TESTINGXOLVA.COM) if the system is case-sensitive and click Sign In.
+<span style="color: red; font-weight: bold;">Failed TestCase:Negative TC_12 -Email case sensitivity: Unexpected behavior</span>
+All tests completed. Browser closed.
+</pre></div></body></html>

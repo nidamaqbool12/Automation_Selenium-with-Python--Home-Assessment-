@@ -1,0 +1,2 @@
+email,first_name,last_name,company,home_phone,cell_phone,registration_type,country,city,province,password,confirm_password,extra1,extra2,extra3
+testuser@gmail.com,Ali,Khan,TechCorp,0211234567,03001234567,Student,Pakistan,Karachi,Sindh,Danish@666,Danish@666,abc,def,ghi

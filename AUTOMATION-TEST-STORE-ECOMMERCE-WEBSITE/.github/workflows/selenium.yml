@@ -1,0 +1,50 @@
+# .github/workflows/selenium.yml
+name: Python Selenium Tests
+
+on:
+  push:
+    branches: [ "main", "develop" ] # Runs when code is pushed to these branches
+  pull_request:
+    branches: [ "main" ] # Runs when a Pull Request is opened against 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4 # Get the code from the repo
+
+    - name: Set up Python 3.x
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.x' # Use the latest available Python 3 version
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        # Install packages from your requirements.txt file
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Install Google Chrome (for Selenium/WebDriver)
+      # Installing the browser is essential for headless or non-headless testing
+      run: |
+        sudo apt-get update
+        sudo apt-get install google-chrome-stable -y
+
+    - name: Run Python Automation Scripts
+      run: |
+        # This executes your main test file.
+        # Choose the correct file that runs your tests:
+        python main.py
+        # OR, if 'Ecommerce-website.py' contains the execution logic:
+        # python Ecommerce-website.py
+
+    - name: Upload Automation Report
+      # This step saves the generated report as an Artifact for you to download
+      if: always() # Upload even if tests fail
+      uses: actions/upload-artifact@v4
+      with:
+        name: automation-report
+        path: Automation_Report.html # This path is based on your image
+        retention-days: 5 # How long the artifact should be kept

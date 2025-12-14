@@ -1,0 +1,12 @@
+email,first_name,last_name,company,home_phone,cell_phone,registration_type,country,city,province,password,confirm_password,extra1,extra2,extra3
+ali.khan@example.com,Ali,Khan,TechSoft,02134567890,03001234567,,,Karachi,Sindh,Pass@123,Pass@123,Ali,Developer,ali.khan@gmail.com
+sara.a,Sara,Ahmed,DesignPro,02198765432,03019876543,,,Lahore,Punjab,Sara@2024,Sara@2024,Sara,Designer,sara.ahmed@gmail.com
+hamza.ali@example.com,Hamza,Ali,BuildIt,abc,03012345678,,,Islamabad,Capital,Test@456,Test@456,Hamza,Engineer,hamza.ali@gmail.com
+amna.zaidi@example.com,Amna,Zaidi,SoftLink,02134561234,03011223344,,,Faisalabad,Punjab,Amna#789,Amna#789,Amna,Manager,amna.zaidi@gmail.com
+bilal.hassan@example.com,Bilal,Hassan,Creative Minds,ffdffwe,03451234567,,,Sialkot,Punjab,bilal!code,bilal!code,Bilal,Artist,bilal.h@gmail.com
+noor.fatima@example.com,Noor,Fatima,WebCraft,02132165498,03016549873,,,Hyderabad,Sindh,Noor@999,Noor@999,Noor,Developer,noor.fatima@gmail.com
+umer.ahsan@example.com,Umer,Ahsan,AppGen,02165498712,03019874562,,,Multan,Punjab,Umer@321,Umer@321,Umer,Tester,umer.ahsan@gmail.com
+hiba.khalid@example.com,Hiba,Khalid,DataSys,02196385274,03012547896,,,Quetta,Balochistan,Hiba@852,Hiba@852,Hiba,Analyst,hiba.khalid@gmail.com
+fahad.waqar@example.com,Fahad,Waqar,NetLink,02145612378,03019876345,,,Peshawar,KPK,Fahad@741,Fahad@741,Fahad,Support,fahad.waqar@gmail.com
+maha.aslam@example.com,Maha,Aslam,InnoTech,02132147856,03017894562,,,Gujranwala,Punjab,Maha@963,Maha@963,Maha,Designer,maha.aslam@gmail.com
+fythiknh

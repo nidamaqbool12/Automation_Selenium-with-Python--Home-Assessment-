@@ -1,0 +1,51 @@
+<html><head><title>Automation Report</title><style>body { font-family: 'Consolas', 'Courier New', monospace; background-color: #f4f4f4; padding: 20px; }.container { background-color: #fff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }h2 { color: #333; border-bottom: 2px solid #ccc; padding-bottom: 10px; }</style></head><body><div class='container'><h2>Automation Execution Report</h2><p><strong>Generated on:</strong> 2025-09-29 11:36:08</p><pre style='background-color:#fff;padding:15px;border:1px solid #ccc; white-space: pre-wrap; word-wrap: break-word;'>Starting Login Automation Tests...
+==================================================
+<span style="color: green; font-weight: bold;">Passed#P01 - Valid email and valid password: Login successful</span>
+Logged out successfully.
+--------------------------------------------------
+<span style="color: green; font-weight: bold;">Passed#P02 - Blank email and password: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#P03 - Copy/Paste equivalent: Login successful</span>
+Logged out successfully.
+--------------------------------------------------
+<span style="color: green; font-weight: bold;">Passed#P04 - Login after refreshing the page: Login successful</span>
+Logged out successfully.
+--------------------------------------------------
+<span style="color: orange; font-weight: bold;">Skipping P05: Login immediately after submitting the service form (Requires external action).</span>
+<hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;">
+<span style="color: red; font-weight: bold;">Failed#P06 - Email with numbers: Login failed
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#P07 - Login using Enter key: Login successful</span>
+Logged out successfully.
+--------------------------------------------------
+
+NEGATIVE TEST CASES:
+==================================================
+<span style="color: green; font-weight: bold;">Passed#N08 - Invalid email and invalid password: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N09 - Invalid email format: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N10 - Empty email: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N11 - Empty password: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N12 - Both fields empty: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N13 - SQL injection attempt: Blocked successfully
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N14 - Whitespace-only email: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N15 - Unregistered email: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N16 - Password less than required length: Login blocked
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N17 - HTML/JS code (XSS) attempt: Blocked successfully
+--------------------------------------------------</span>
+<span style="color: red; font-weight: bold;">Failed#N18 - Email in uppercase: Unexpected success (System is NOT case-sensitive for email)
+--------------------------------------------------</span>
+<span style="color: green; font-weight: bold;">Passed#N19 - Password case mismatch: Login blocked (System is case-sensitive for password) 
+--------------------------------------------------</span>
+<span style="color: orange; font-weight: bold;">Skipping N20: Login after account deletion (Requires external setup/deletion).</span>
+<hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;"><hr style="border: 1px dashed #bbb;">
+All tests completed.
+</pre></div></body></html>
