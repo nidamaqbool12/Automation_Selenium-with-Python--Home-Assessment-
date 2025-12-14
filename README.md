@@ -58,9 +58,12 @@ The automation project can be executed locally using PyCharm or any other Python
 
 ## 1. Prerequisites for Running the Project
 
-- Python version 3.8 or higher installed on your system.  
-- Git installed and configured for repository management.  
-- Google Chrome browser installed.  
+- Python version 3.8 or higher installed on your system.
+  
+- Git installed and configured for repository management.
+
+- Google Chrome browser installed.
+- 
 - PyCharm IDE or any preferred Python development environment.  
 
 ## 2. Cloning the Project Repository
@@ -74,13 +77,16 @@ To clone the project repository to your local machine:
 To clone the project repository to your local machine:
 
 git clone [YOUR_GITHUB_REPO_LINK]
+
 cd Automation_Selenium-with-Python--Home-Assessment-
 
 
 ## 2. Connecting Local Repository to GitHub 
 
 git remote add origin [YOUR_GITHUB_REPO_LINK]
+
 git branch -M main
+
 git push -u origin main
 
 
@@ -92,15 +98,20 @@ pip install selenium
 ## 4 Instructions for Running the Automation Test Script 
 
 git add AUTOMATION-TEST-STORE-ECOMMERCE-WEBSITE/Ecommerce-website.py
+
 git commit -m "checkout confirmation."
+
 git push origin main
+
   Note: The script is configured to run Chrome in headless mode by default, providing faster execution and compatibility with CI/CD pipelines.
 
 
 ## From PyCharm
 
 Open the project in PyCharm.
+
 Locate Ecommerce-website.py in the project explorer.
+
 Right-click on the script and select Run 'Ecommerce-website'.
 
 
@@ -109,26 +120,35 @@ Right-click on the script and select Run 'Ecommerce-website'.
 ## Workflow Overview
 
 Trigger: The workflow runs automatically on every push to the main branch.
+
 Environment Setup: The CI job runs on an Ubuntu Linux runner, installs Python, and the required dependencies (selenium).
+
 Test Execution: The Selenium automation script runs in headless Chrome.
+
 Reporting: After execution, the Automation_Report.html file is generated and uploaded as a workflow artifact for review.
 
 
 ## Viewing the Automation Test Report
 
 Navigate to the Actions tab in your GitHub repository.
+
 Select the most recent workflow run.
+
 Scroll to the Artifacts section and download `Automation_Test_Report.html
 
 ## Project Directory Structure
+
 <img width="874" height="245" alt="image" src="https://github.com/user-attachments/assets/5dfd57ff-2383-478b-8f59-2cd723fc8467" />
 
 
 ## Important Notes and Considerations
 
 The website used for testing is a dummy e-commerce site, and all orders are non-functional.
+
 The automation script dynamically generates test data to prevent duplicate registrations.
+
 The use of explicit waits and JavaScript Executor ensures stable and reliable execution across both local and CI/CD environments.
+
 Running the script in PyCharm is recommended for debugging, viewing logs, and inspecting web elements during development.
 
 
