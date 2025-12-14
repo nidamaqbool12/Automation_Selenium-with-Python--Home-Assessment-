@@ -2,17 +2,15 @@ import os
 import time
 import datetime
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC, wait
+from selenium.webdriver.support import expected_conditions as EC
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
-
-
 
 # -------------------- HTML LOGGING & REPORT ---------------------
 html_logs = []
 
 def log(message):
-
     print(message)
     html_message = message
     if "PASSED" in message or "PASS" in message or "[✓]" in message:
@@ -42,9 +40,14 @@ def generate_html_report():
     log(f"[✓] HTML report saved at: {os.path.abspath(report_path)}")
 
 
-
 # -------------------- SELENIUM Automation SCRIPT ---------------------
-driver = webdriver.Firefox()
+chrome_options = Options()
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-dev-shm-usage")
+chrome_options.add_argument("--window-size=1920,1080")
+
+driver = webdriver.Chrome(options=chrome_options)
 driver.get("https://www.automationteststore.com/")
 driver.maximize_window()
 time.sleep(1)
@@ -56,9 +59,6 @@ register_link.click()
 log("--------------------PASSED#01-----------------------")
 log("Successfully clicked on the Register link From the Nav Bar")
 time.sleep(3)
-
-
-
 
 # --------------------------Registration Form-----------------------------
 continue_btn = driver.find_element(By.XPATH, "//button[@title='Continue']")
@@ -137,9 +137,6 @@ btn = driver.find_element(By.LINK_TEXT, "Continue")
 btn.click()
 time.sleep(3)
 
-
-
-
 # ------------------- Click on "Apparel & accessories" -------------------
 apparel_link = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.XPATH, "//a[contains(@href,'path=68')]"))
@@ -150,8 +147,6 @@ if apparel_link.is_displayed() and apparel_link.is_enabled():
     log("Clicked on Apparel & accessories")
 else:
     log("FAILED#05: Apparel & accessories link not clickable!")
-
-
 
 # ------------------- Click on "Shoes" -------------------
 shoes_link = WebDriverWait(driver, 10).until(
@@ -164,8 +159,6 @@ if shoes_link.is_displayed() and shoes_link.is_enabled():
 else:
     log("FAILED#06: Shoes link not clickable!")
 
-
-
 # ------------------- Select Product -------------------
 product_link1 = driver.find_element(By.CLASS_NAME, "prdocutname")
 if product_link1.is_displayed():
@@ -175,8 +168,6 @@ if product_link1.is_displayed():
 else:
     log("FAILED#07: Product link not found!")
 time.sleep(3)
-
-
 
 # ------------------- Select Quantity -------------------
 quality = driver.find_element(By.ID, "product_quantity")
@@ -189,8 +180,6 @@ else:
     log("FAILED#08: Quantity field not found!")
 time.sleep(2)
 
-
-
 # ------------------- Add to Cart -------------------
 add_to_cart = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.CSS_SELECTOR, ".cart"))
@@ -202,8 +191,6 @@ if add_to_cart.is_enabled():
 else:
     log("FAILED#09: Add to Cart button not clickable!")
 
-
-
 # ------------------- Checkout -------------------
 check_out = driver.find_element(By.ID, "cart_checkout1")
 if check_out.is_displayed() and check_out.is_enabled():
@@ -213,8 +200,6 @@ if check_out.is_displayed() and check_out.is_enabled():
 else:
     log("FAILED#10: Checkout button not found!")
 time.sleep(5)
-
-
 
 # ------------------- Place Order -------------------
 order_btn = WebDriverWait(driver, 15).until(
@@ -229,8 +214,6 @@ else:
 
 time.sleep(4)
 
-
-
 # ------------------- Verify Order Success Message -------------------
 success_msg = WebDriverWait(driver, 10).until(
     EC.presence_of_element_located((By.CSS_SELECTOR, ".maintext"))
@@ -242,7 +225,6 @@ else:
 
 time.sleep(3)
 driver.quit()
-
 
 # ------------------- Generate HTML Report -------------------
 generate_html_report()
