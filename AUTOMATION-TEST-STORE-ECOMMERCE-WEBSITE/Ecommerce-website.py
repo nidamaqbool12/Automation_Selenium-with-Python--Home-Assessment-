@@ -52,8 +52,14 @@ try:
     time.sleep(1)
 
     # -------------------- Register ---------------------
-    register_link = driver.find_element(By.XPATH, "//a[normalize-space()='Login or register']")
+    # FIX: Use WebDriverWait for element_to_be_clickable to resolve ElementNotInteractableException
+    register_link_xpath = "//a[normalize-space()='Login or register']"
+    
+    register_link = WebDriverWait(driver, 10).until(
+        EC.element_to_be_clickable((By.XPATH, register_link_xpath))
+    )
     register_link.click()
+    
     log("--------------------PASSED#01-----------------------")
     log("Clicked on the Register link")
 
@@ -91,7 +97,10 @@ try:
     driver.find_element(By.ID, "AccountFrm_newsletter0").click()
     driver.find_element(By.ID, "AccountFrm_agree").click()
 
+    # FIX: Add a small wait after submitting the form to ensure the next page loads
     driver.find_element(By.XPATH, "//button[@title='Continue']").click()
+    WebDriverWait(driver, 10).until(EC.url_changes("https://www.automationteststore.com/index.php?rt=account/success")) 
+
     log("--------------------PASSED#03-----------------------")
     log("User Registered successfully")
 
