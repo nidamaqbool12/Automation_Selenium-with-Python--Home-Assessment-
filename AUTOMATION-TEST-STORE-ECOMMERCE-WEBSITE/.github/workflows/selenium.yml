@@ -32,7 +32,7 @@ jobs:
     - name: Run Python Automation Scripts
       run: |
         # Run Selenium script with headless Chrome
-        python main.py
+        python Ecommerce-website.py
 
     - name: Upload Automation Report
       if: always()
