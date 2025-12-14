@@ -63,7 +63,7 @@ The automation project can be executed locally using PyCharm or any other Python
 - Git installed and configured for repository management.
 
 - Google Chrome browser installed.
-- 
+  
 - PyCharm IDE or any preferred Python development environment.  
 
 ## 2. Cloning the Project Repository
