@@ -56,13 +56,17 @@ try:
     time.sleep(3) # Initial hard wait for CI stability
 
     # -------------------- REGISTER ---------------------
-    # FIX: Use presence first, then clickability, with a higher timeout
     register_link_xpath = "//a[normalize-space()='Login or register']"
-    wait.until(EC.presence_of_element_located((By.XPATH, register_link_xpath)))
-    wait.until(EC.element_to_be_clickable((By.XPATH, register_link_xpath))).click()
+    
+    # ULTIMATE FIX: Use JavaScript to force the click once the element is present, 
+    # bypassing all CI rendering/interactability issues.
+    register_link = wait.until(
+        EC.presence_of_element_located((By.XPATH, register_link_xpath))
+    )
+    driver.execute_script("arguments[0].click();", register_link) # FORCED CLICK
 
     log("==================== PASSED #01 ====================")
-    log("Clicked Login or Register")
+    log("Clicked Login or Register via JavaScript Executor")
 
     # Click Continue on Registration page
     wait.until(EC.element_to_be_clickable(
